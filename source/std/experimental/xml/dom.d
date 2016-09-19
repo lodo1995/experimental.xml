@@ -700,6 +700,12 @@ interface NodeList(DOMString)
     +   `0` to `length-1` inclusive.
     +/
     @property size_t length();
+    ///
+    bool empty();
+    ///
+    void popFront();
+    ///
+    Node!DOMString front();
 }
 
 /++
