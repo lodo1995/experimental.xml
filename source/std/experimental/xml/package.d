@@ -253,12 +253,11 @@ public import std.experimental.xml.parser;
 public import std.experimental.xml.cursor;
 public import std.experimental.xml.validation;
 public import std.experimental.xml.writer;
+public import std.experimental.xml.dom;
 public import std.experimental.xml.domparser;
 public import std.experimental.xml.domimpl;
 public import std.experimental.xml.sax;
 public import std.experimental.xml.faststrings;
-
-public import dom = std.experimental.xml.dom;
 
 @nogc unittest
 {
