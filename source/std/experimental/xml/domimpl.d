@@ -533,16 +533,16 @@ class DOMImplementation(DOMString, Alloc = shared(GCAllocator), ErrorHandler = b
                     }
                     return result;
                 }
+                // range interface
+                Node front() { return currentChild; }
+                void popFront() { currentChild = currentChild.nextSibling; }
+                bool empty() { return currentChild is null; }
             }
             // more idiomatic methods
             auto opIndex(size_t i)
             {
                 return item(i);
             }
-            // range interface
-            auto front() { return currentChild; }
-            void popFront() { currentChild = currentChild.nextSibling; }
-            bool empty() { return currentChild is null; }
         }
         // method not required by the spec, specialized in NodeWithChildren
         bool isAncestor(Node other) { return false; }
@@ -1162,14 +1162,13 @@ class DOMImplementation(DOMString, Alloc = shared(GCAllocator), ErrorHandler = b
                 }
                 return res;
             }
+            // range interface
+            bool empty() { return current is null; }
+            void popFront() { current = findNext(current); }
+            Element front() { return current; }
         }
         // more idiomatic methods
         auto opIndex(size_t i) { return item(i); }
-
-        // range interface
-        bool empty() { return current is null; }
-        void popFront() { current = findNext(current); }
-        auto front() { return current; }
     }
     /// Implementation of $(LINK2 ../dom/CharacterData, `std.experimental.xml.dom.CharacterData`)
     abstract class CharacterData: Node, dom.CharacterData!DOMString
