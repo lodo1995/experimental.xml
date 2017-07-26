@@ -147,6 +147,9 @@ class DOMImplementation(DOMString, Alloc = shared(GCAllocator), ErrorHandler = b
     {
         override
         {
+            /// Implementation of $(LINK2 ../dom/Node.ownerDocument, `std.experimental.xml.dom.Node.ownerDocument`).
+            @property Document ownerDocument() { return _ownerDocument; }
+
             /// Implementation of $(LINK2 ../dom/Node.parentNode, `std.experimental.xml.dom.Node.parentNode`).
             @property Node parentNode() { return _parentNode; }
             /++
@@ -156,8 +159,6 @@ class DOMImplementation(DOMString, Alloc = shared(GCAllocator), ErrorHandler = b
             @property Node previousSibling() { return _previousSibling; }
             /// Implementation of $(LINK2 ../dom/Node.nextSibling, `std.experimental.xml.dom.Node.nextSibling`).
             @property Node nextSibling() { return _nextSibling; }
-            /// Implementation of $(LINK2 ../dom/Node.ownerDocument, `std.experimental.xml.dom.Node.ownerDocument`).
-            @property Document ownerDocument() { return _ownerDocument; }
 
             /++
             +   Implementation of $(LINK2 ../dom/Node.isSameNode, `std.experimental.xml.dom.Node.isSameNode`).
