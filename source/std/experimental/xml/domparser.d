@@ -181,6 +181,8 @@ struct DOMBuilder(T, DOMImplementation = dom.DOMImplementation!(T.StringType))
     {
         switch (cursor.kind)
         {
+            // XMLKind.elementEnd is needed for empty tags: <tag></tag>
+            case XMLKind.elementEnd:
             case XMLKind.elementStart:
             case XMLKind.elementEmpty:
                 auto elem = document.createElement(cursor.name);
@@ -260,4 +262,30 @@ unittest
 
     assert(doc.getElementsByTagName("ccc").length == 1);
     assert(doc.documentElement.getAttribute("xmlns:myns") == "something");
+}
+
+unittest
+{
+    import std.experimental.xml.lexers;
+    import std.experimental.xml.parser;
+    import std.experimental.xml.cursor;
+    import std.experimental.allocator.gc_allocator;
+    import domimpl = std.experimental.xml.domimpl;
+
+    alias DOMImplType = domimpl.DOMImplementation!string;
+
+    auto xml = `<?xml version="1.0" encoding="UTF-8"?><tag></tag>`;
+    auto builder =
+         xml
+        .lexer
+        .parser
+        .cursor
+        .copyingCursor
+        .domBuilder(new DOMImplType());
+
+    builder.setSource(xml);
+    builder.buildRecursive;
+    auto doc = builder.getDocument;
+
+    assert(doc.childNodes.length == 1);
 }
