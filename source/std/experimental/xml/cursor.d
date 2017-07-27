@@ -237,7 +237,11 @@ struct Cursor(P, Flag!"conflateCDATA" conflateCDATA = Yes.conflateCDATA, ErrorHa
         }
         else if (currentNode.kind == XMLKind.elementStart)
         {
-            return advanceInput() && currentNode.kind != XMLKind.elementEnd;
+            advanceInput();
+            if (currentNode.kind != XMLKind.elementEnd)
+                return true;
+            currentNode.kind = XMLKind.elementEmpty;
+            return false;
         }
         else if (currentNode.kind == XMLKind.dtdStart)
         {
